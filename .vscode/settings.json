@@ -8,6 +8,8 @@
         ".pytest_cache": true,
         ".python-version": true,
         "uv.lock": true,
-        ".vscode": true
+        ".vscode": true,
+        ".venv": true,
+        ".ruff_cache": true
     }
 }
