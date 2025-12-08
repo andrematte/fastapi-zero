@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 from fastapi_zero.models import TodoState
 
@@ -29,15 +29,10 @@ class Token(BaseModel):
     token_type: str
 
 
-class FilterPage(BaseModel):
-    offset: int = 0
-    limit: int = 100
-
-
 class TodoSchema(BaseModel):
     title: str
     description: str
-    state: TodoState
+    state: TodoState = Field(default=TodoState.todo)
 
 
 class TodoPublic(TodoSchema):
@@ -48,8 +43,13 @@ class TodoList(BaseModel):
     todos: list[TodoPublic]
 
 
+class FilterPage(BaseModel):
+    offset: int = 0
+    limit: int = 10
+
+
 class FilterTodo(FilterPage):
-    title: str | None = None
+    title: str | None = Field(default=None, min_length=3, max_length=20)
     description: str | None = None
     state: TodoState | None = None
 
@@ -57,6 +57,4 @@ class FilterTodo(FilterPage):
 class TodoUpdate(BaseModel):
     title: str | None = None
     description: str | None = None
-    state: TodoState | None = None
-    state: TodoState | None = None
     state: TodoState | None = None
